@@ -1,0 +1,14 @@
+.buttons{
+    display: flex;
+    justify-content: flex-end;
+}
+.borderbottom{
+    border-bottom: 2px solid black;
+}
+.py-4{
+    display: flex;
+    flex-direction: column;
+}
+.btn{
+    align-self: flex-end;
+}
