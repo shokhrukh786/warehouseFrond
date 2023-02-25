@@ -19,7 +19,7 @@ function Navbar(props) {
                     <FaIcons.FaBars/>
                 </Link>
             </div>
-            <div className={sidebar? "sidebar-container active" : "sidebar-container"}>
+            <div className={sidebar ? "sidebar-container active" : "sidebar-container"}>
                 <ul className="sidebar-items">
                     <li className="sidebar-toggle">
                         <Link to="/" className="nav-menu-icon" onClick={showSidebar}>

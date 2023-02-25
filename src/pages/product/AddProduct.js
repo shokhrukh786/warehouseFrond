@@ -1,15 +1,19 @@
-import React, {useState} from 'react';
-import {Link, useNavigate} from "react-router-dom";
+import React, {useEffect, useState} from 'react';
+import {Link, useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 
 function AddProduct(props) {
     let navigate = useNavigate();
 
     const [products, setProduct] = useState({
-        name: ""
+        name: "",
+        code: "",
+        categoryId: "",
+        measurementId:"",
+        photoId:""
     })
 
-    const {name} = products
+    const {name, code, categoryId, measurementId, photoId} = products
 
     const onInputChange=(e)=>{
         setProduct({
@@ -24,6 +28,53 @@ function AddProduct(props) {
         navigate("/product")     /*saqlangandan keyin boshqa pagega otadi*/
     }
 
+
+
+
+
+    /**
+     * select form category uchun
+     */
+    const [categoryes, setCategory] = useState([])
+    const {id} = useParams();
+
+    useEffect( ()=> {
+        loadCategory();
+        console.log(categoryes)
+    }, [])
+
+    const loadCategory = async () => {
+        const result = await axios.get("http://localhost:8080/api/category");
+        setCategory(result.data.object);
+    }
+    /**
+     * tugashi
+     */
+
+
+
+
+    /**
+     * select form meauserement uchun
+     */
+    const [measurements, setMeasurement] = useState([])
+    // const {id} = useParams();
+    useEffect( ()=> {
+        loadMeasurement();
+    }, [])
+
+    const loadMeasurement = async () => {
+        const result = await axios.get("http://localhost:8080/api/measurement");
+        setMeasurement(result.data.object);
+        console.log(result.data.object)
+    }
+    /**
+     * tugashi
+     */
+
+
+
+
     return (
         <div className="container">
             <div className="row">
@@ -31,35 +82,61 @@ function AddProduct(props) {
                     <h2 className="text-center mt-4">Mahsulot qo'shish</h2>
                     <form onSubmit={(e) => onSubmit(e)}>
                         <div className="mb-3">
+
                             <label className="form-label" htmlFor="Name">
                                 Name
                             </label>
                             <input
                                 type={"text"}
                                 className="form-control"
-                                placeholder="Enter your name"
+                                placeholder="mahsulot nomi"
                                 name="name"
                                 value={name}
                                 onChange={(e)=>onInputChange(e)}
                             />
+
+                            <label className="form-label" htmlFor="Name">
+                                Kodi
+                            </label>
+                            <input
+                                type={"text"}
+                                className="form-control"
+                                placeholder="shrix kodi"
+                                name="code"
+                                value={code}
+                                onChange={(e)=>onInputChange(e)}
+                            />
+
                             <label className="form-label" htmlFor="Name">
                                 Kategoriya
                             </label>
                             <select className="form-select" aria-label="Default select example">
-                                <option selected>tanlang...</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                <option selected>barcha kategoriyalar...</option>
+                                {categoryes.map( (category, index)=>(
+                                    <option
+                                        key={index}
+                                        value={category.id}
+                                    >
+                                        {category.name}
+                                    </option>
+                                ))}
                             </select>
+
                             <label className="form-label" htmlFor="Name">
-                                O'lchov birligi
+                                O'chov birligi
                             </label>
                             <select className="form-select" aria-label="Default select example">
-                                <option selected>tanlang...</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                <option selected>barcha o'lchov birliklari...</option>
+                                {measurements.map( (measurement, index)=>(
+                                    <option
+                                        key={index}
+                                        value={measurement.id}
+                                    >
+                                        {measurement.name}
+                                    </option>
+                                ))}
                             </select>
+
                         </div>
                         <div className="buttons">
                             <button type="submit" className="btn btn-outline-primary">Saqlash</button>

@@ -14,6 +14,7 @@ function Category(props) {
     const loadUsers = async () => {
         const result = await axios.get("http://localhost:8080/api/category")
         setCategory(result.data.object);
+        console.log(result.data.object)
     }
 
     const deleteUser =async (id)=> {
