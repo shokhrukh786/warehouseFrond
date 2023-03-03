@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Link, useParams} from "react-router-dom";
 import axios from "axios";
+import "../style/Category.css"
 
 function Category(props) {
     const [categoryes, setCategory] = useState([]);
@@ -23,7 +24,7 @@ function Category(props) {
     }
 
     return (
-        <div className="container">
+        <div className="container ">
             <div className="py-4">
                 <Link to="/addcategory" className="btn btn-success mb-4">Kategoriya yaratish</Link>
                 <table className="table border shadow">

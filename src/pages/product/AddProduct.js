@@ -1,6 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {Link, useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
+import "../../style/Edit..css"
+import "../../style/Buttons.css"
+
 
 function AddProduct(props) {
     let navigate = useNavigate();
@@ -13,7 +16,7 @@ function AddProduct(props) {
         photoId:""
     })
 
-    const {name, code, categoryId, measurementId, photoId} = products
+    const {name, code} = products
 
     const onInputChange=(e)=>{
         setProduct({
@@ -24,7 +27,13 @@ function AddProduct(props) {
 
     const onSubmit =async (e)=>{
         e.preventDefault() ;   /*urldagi malumotlarni yashiradi*/
-        await axios.post("http://localhost:8080/api/product", products)
+        // console.log(e.target.category.value);
+        await axios.post("http://localhost:8080/api/product", {
+            name: name,
+            code: code,
+            categoryId: e.target.categoryyy.value,
+            measurementId: e.target.measurement.value
+        })
         navigate("/product")     /*saqlangandan keyin boshqa pagega otadi*/
     }
 
@@ -36,16 +45,17 @@ function AddProduct(props) {
      * select form category uchun
      */
     const [categoryes, setCategory] = useState([])
+
     const {id} = useParams();
 
     useEffect( ()=> {
         loadCategory();
-        console.log(categoryes)
     }, [])
 
     const loadCategory = async () => {
         const result = await axios.get("http://localhost:8080/api/category");
         setCategory(result.data.object);
+        console.log(result)
     }
     /**
      * tugashi
@@ -66,7 +76,6 @@ function AddProduct(props) {
     const loadMeasurement = async () => {
         const result = await axios.get("http://localhost:8080/api/measurement");
         setMeasurement(result.data.object);
-        console.log(result.data.object)
     }
     /**
      * tugashi
@@ -110,7 +119,7 @@ function AddProduct(props) {
                             <label className="form-label" htmlFor="Name">
                                 Kategoriya
                             </label>
-                            <select className="form-select" aria-label="Default select example">
+                            <select name="categoryyy" className="form-select" aria-label="Default select example">
                                 <option selected>barcha kategoriyalar...</option>
                                 {categoryes.map( (category, index)=>(
                                     <option
@@ -125,7 +134,7 @@ function AddProduct(props) {
                             <label className="form-label" htmlFor="Name">
                                 O'chov birligi
                             </label>
-                            <select className="form-select" aria-label="Default select example">
+                            <select name="measurement" className="form-select" aria-label="Default select example">
                                 <option selected>barcha o'lchov birliklari...</option>
                                 {measurements.map( (measurement, index)=>(
                                     <option

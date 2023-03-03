@@ -21,11 +21,12 @@ function Navbar(props) {
             </div>
             <div className={sidebar ? "sidebar-container active" : "sidebar-container"}>
                 <ul className="sidebar-items">
-                    <li className="sidebar-toggle">
-                        <Link to="/" className="nav-menu-icon" onClick={showSidebar}>
+                    {/*<li className="sidebar-toggle">
+                        <Link to={sidebar.path} className="nav-menu-icon" onClick={showSidebar}>
                             <FaIcons.FaWindowClose/>
                         </Link>
-                    </li>
+                    </li>*/}
+                    <div className="logo"><span></span></div>
                     <li>
                         {SidebarData.map((sidebaritem) => {
                             return(
