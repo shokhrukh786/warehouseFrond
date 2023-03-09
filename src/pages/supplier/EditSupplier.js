@@ -1,65 +1,44 @@
 import React, {useEffect, useState} from 'react';
 import {Link, useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
+import "../../style/Edit..css"
 
-function EditCategory(props) {
+function EditWarehouse(props) {
     const {id} = useParams();
 
     let navigate = useNavigate();
 
-    const [categoryes, setCategory] = useState({
-        name: ""
+    const [suppliers, setSuppliers] = useState({
+        name: "",
+        phoneNumber: ""
     })
 
-    const {name} = categoryes
+    const {name, phoneNumber} = suppliers
 
     const onInputChange=(e)=>{
-        setCategory({
-            ...categoryes,  //klonini yaratish
+        setSuppliers({
+            ...suppliers,
             [e.target.name]:e.target.value
         })
     }
 
     const onSubmit =async (e)=>{
         e.preventDefault() ;   /*urldagi malumotlarni yashiradi*/
-        await axios.put(`http://localhost:8080/api/category/${id}`, {
+        await axios.put(`http://localhost:8080/api/supplier/${id}`, {
             name: name,
-            parentCategoryId: e.target.categoryyy.value
+            phoneNumber: phoneNumber
         })
-        navigate("/category")     /*saqlangandan keyin boshqa pagega otadi*/
+        navigate("/supplier")     /*saqlangandan keyin boshqa pagega otadi*/
     }
-
 
     useEffect(()=>{
         loadUser();
     }, [])
 
     const loadUser = async ()=>{
-        const result = await axios.get(`http://localhost:8080/api/category/${id}`)
-        setCategory(result.data.object);
+        const result = await axios.get(`http://localhost:8080/api/supplier/${id}`)
+        setSuppliers(result.data.object);
     }
-
-
-
-
-    /**
-     * select form category uchun
-     */
-    const [oldCategoryes, setOldCategory] = useState([])
-    // const {id} = useParams();
-    useEffect( ()=> {
-        loadMeasurement();
-    }, [])
-
-    const loadMeasurement = async () => {
-        const result = await axios.get("http://localhost:8080/api/category");
-        setOldCategory(result.data.object);
-    }
-    /**
-     * tugashi
-     */
-
-
 
     return (
         <div className="container">
@@ -80,23 +59,20 @@ function EditCategory(props) {
                                 onChange={(e)=>onInputChange(e)}
                             />
                             <label className="form-label" htmlFor="Name">
-                                Ota kategoriya
+                                Telefon raqam
                             </label>
-                            <select name="categoryyy" className="form-select" aria-label="Default select example">
-                                <option >barcha kategoriyalar...</option>
-                                {oldCategoryes.map( (category, index)=>(
-                                    <option
-                                        key={index}
-                                        value={category.id}
-                                    >
-                                        {category.name}
-                                    </option>
-                                ))}
-                            </select>
+                            <input
+                                type={"text"}
+                                className="form-control"
+                                placeholder="Enter your name"
+                                name="phoneNumber"
+                                value={phoneNumber}
+                                onChange={(e)=>onInputChange(e)}
+                            />
                         </div>
                         <div className="buttons">
                             <button type="submit" className="btn btn-outline-primary">Saqlash</button>
-                            <Link to="/category" className="btn btn-outline-danger mx-2">Bekor qilish</Link>
+                            <Link to="/editsupplier" className="btn btn-outline-danger mx-2">Bekor qilish</Link>
                         </div>
                     </form>
                 </div>
@@ -105,4 +81,4 @@ function EditCategory(props) {
     );
 }
 
-export default EditCategory;
+export default EditWarehouse;

@@ -15,7 +15,6 @@ function Category(props) {
     const loadUsers = async () => {
         const result = await axios.get("http://localhost:8080/api/category")
         setCategory(result.data.object);
-        console.log(result.data.object)
     }
 
     const deleteUser =async (id)=> {
@@ -31,15 +30,17 @@ function Category(props) {
                     <thead>
                     <tr className="borderbottom">
                         <th scope="col">#</th>
-                        <th scope="col">Name</th>
+                        <th scope="col">Nomi</th>
+                        <th scope="col">parent kategoriya</th>
                     </tr>
                     </thead>
                     <tbody>
                     {Object.values(categoryes)
                         .map((category, index) =>(
-                            <tr>
+                            <tr key={index}>
                                 <th  scope="row" key={index} >{index+1}</th>
                                 <td>{category.name}</td>
+                                {category.parentCategory == null ? <td>mavjud emas</td> : <td>{category.parentCategory.name}</td>}
                                 <td className="buttons">
                                     <Link to={`/viewcategory/${category.id}`} className="btn btn-primary mx-2">Batafsil</Link>
                                     <Link to={`/editcategory/${category.id}`} className="btn btn-outline-primary mx-2">Tahrirlash</Link>

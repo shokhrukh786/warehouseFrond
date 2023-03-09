@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {Link, useParams} from "react-router-dom";
 import axios from "axios";
 import "../style/Buttons.css"
-import category from "./Category";
 
 function Product(props) {
     const [products, setProduct] = useState([]);
@@ -31,8 +30,8 @@ function Product(props) {
                     <thead>
                     <tr className="borderbottom">
                         <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Code</th>
+                        <th scope="col">Nomi</th>
+                        <th scope="col">Kod</th>
                         <th scope="col">Kategoriya</th>
                         <th scope="col">O'lchov turi</th>
                     </tr>
@@ -40,13 +39,12 @@ function Product(props) {
                     <tbody>
                     {Object.values(products)
                         .map((product, index) =>(
-                            <tr>
+                            <tr key={index}>
                                 <th  scope="row" key={index} >{index+1}</th>
                                 <td>{product.name}</td>
                                 <td>{product.code}</td>
                                 <td>{product.category.name}</td>
                                 <td>{product.measurement.name}</td>
-                                {console.log(product)}
                                 <td className="buttons">
                                     <Link to={`/viewproduct/${product.id}`} className="btn btn-primary mx-2">Batafsil</Link>
                                     <Link to={`/editproduct/${product.id}`} className="btn btn-outline-primary mx-2">Tahrirlash</Link>

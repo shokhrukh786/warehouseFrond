@@ -1,43 +1,47 @@
 import React, {useEffect, useState} from 'react';
 import {Link, useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
-import "../../style/Edit..css"
-import "../../style/Buttons.css"
 
+function EditProduct(props) {
+    const {id} = useParams();
 
-function AddProduct(props) {
     let navigate = useNavigate();
 
     const [products, setProduct] = useState({
         name: "",
-        code: "",
-        categoryId: "",
-        measurementId:"",
-        photoId:""
+        code: ""
     })
 
     const {name, code} = products
 
-    const onInputChange=(e)=>{
+    const onInputChange = (e) => {
         setProduct({
             ...products,
-            [e.target.name]:e.target.value
+            [e.target.name]: e.target.value
         })
     }
 
-    const onSubmit =async (e)=>{
-        e.preventDefault() ;   /*urldagi malumotlarni yashiradi*/
-        // console.log(e.target.category.value);
-        await axios.post("http://localhost:8080/api/product", {
+    const onSubmit = async (e) => {
+        e.preventDefault();   /*urldagi malumotlarni yashiradi*/
+        await axios.put(`http://localhost:8080/api/product/${id}`, {
             name: name,
             code: code,
             categoryId: e.target.categoryyy.value,
             measurementId: e.target.measurementtt.value
         })
+        console.log(products)
         navigate("/product")     /*saqlangandan keyin boshqa pagega otadi*/
     }
 
 
+    useEffect(() => {
+        loadUser();
+    }, [])
+
+    const loadUser = async () => {
+        const result = await axios.get(`http://localhost:8080/api/product/${id}`)
+        setProduct(result.data.object);
+    }
 
 
 
@@ -45,8 +49,6 @@ function AddProduct(props) {
      * select form category uchun
      */
     const [categoryes, setCategory] = useState([])
-
-    const {id} = useParams();
 
     useEffect( ()=> {
         loadCategory();
@@ -62,12 +64,11 @@ function AddProduct(props) {
 
 
 
-
     /**
      * select form meauserement uchun
      */
     const [measurements, setMeasurement] = useState([])
-    // const {id} = useParams();
+
     useEffect( ()=> {
         loadMeasurement();
     }, [])
@@ -82,15 +83,13 @@ function AddProduct(props) {
 
 
 
-
     return (
         <div className="container">
             <div className="row">
                 <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
-                    <h2 className="text-center mt-4">Mahsulot qo'shish</h2>
+                    <h2 className="text-center mt-4">Mahsulotni tahrirlash</h2>
                     <form onSubmit={(e) => onSubmit(e)}>
                         <div className="mb-3">
-
                             <label className="form-label" htmlFor="Name">
                                 Name
                             </label>
@@ -100,10 +99,10 @@ function AddProduct(props) {
                                 placeholder="mahsulot nomi"
                                 name="name"
                                 value={name}
-                                onChange={(e)=>onInputChange(e)}
+                                onChange={(e) => onInputChange(e)}
                             />
 
-                            <label className="form-label" htmlFor="Name">
+                            <label className="form-label" htmlFor="Code">
                                 Kodi
                             </label>
                             <input
@@ -112,15 +111,15 @@ function AddProduct(props) {
                                 placeholder="shrix kodi"
                                 name="code"
                                 value={code}
-                                onChange={(e)=>onInputChange(e)}
+                                onChange={(e) => onInputChange(e)}
                             />
 
                             <label className="form-label" htmlFor="Name">
                                 Kategoriya
                             </label>
                             <select name="categoryyy" className="form-select" aria-label="Default select example">
-                                <option selected>barcha kategoriyalar...</option>
-                                {categoryes.map( (category, index)=>(
+                                <option>barcha kategoriyalar...</option>
+                                {categoryes.map((category, index) => (
                                     <option
                                         key={index}
                                         value={category.id}
@@ -134,8 +133,8 @@ function AddProduct(props) {
                                 O'chov birligi
                             </label>
                             <select name="measurementtt" className="form-select" aria-label="Default select example">
-                                <option selected>barcha o'lchov birliklari...</option>
-                                {measurements.map( (measurement, index)=>(
+                                <option>barcha o'lchov birliklari...</option>
+                                {measurements.map((measurement, index) => (
                                     <option
                                         key={index}
                                         value={measurement.id}
@@ -144,7 +143,6 @@ function AddProduct(props) {
                                     </option>
                                 ))}
                             </select>
-
                         </div>
                         <div className="buttons">
                             <button type="submit" className="btn btn-outline-primary">Saqlash</button>
@@ -157,4 +155,4 @@ function AddProduct(props) {
     );
 }
 
-export default AddProduct;
+export default EditProduct;

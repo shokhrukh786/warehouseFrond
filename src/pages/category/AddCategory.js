@@ -1,12 +1,13 @@
-import React, {useState} from 'react';
-import {Link, useNavigate} from "react-router-dom";
+import React, {useEffect, useState} from 'react';
+import {Link, useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 
 function AddCategory(props) {
     let navigate = useNavigate();
 
     const [categoryes, setCategory] = useState({
-        name: ""
+        name: "",
+        parentCategoryId: ""
     })
 
     const {name} = categoryes
@@ -20,9 +21,38 @@ function AddCategory(props) {
 
     const onSubmit =async (e)=>{
         e.preventDefault() ;   /*urldagi malumotlarni yashiradi*/
-        await axios.post("http://localhost:8080/api/category", categoryes)
+        await axios.post("http://localhost:8080/api/category", {
+            name: name,
+            parentCategoryId: e.target.categoryyy.value
+        })
         navigate("/category")     /*saqlangandan keyin boshqa pagega otadi*/
     }
+
+
+
+
+
+    /**
+     * select form category uchun
+     */
+    const [oldCategoryes, setOldCategory] = useState([])
+
+    const {id} = useParams();
+
+    useEffect( ()=> {
+        loadCategory();
+    }, [])
+
+    const loadCategory = async () => {
+        const result = await axios.get("http://localhost:8080/api/category");
+        setOldCategory(result.data.object);
+    }
+    /**
+     * tugashi
+     */
+
+
+
 
     return (
         <div className="container">
@@ -45,11 +75,16 @@ function AddCategory(props) {
                             <label className="form-label" htmlFor="Name">
                                 Ota kategoriya
                             </label>
-                            <select className="form-select" aria-label="Default select example">
-                                <option selected>Open this select menu</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                            <select name="categoryyy" className="form-select" aria-label="Default select example">
+                                <option >barcha kategoriyalar...</option>
+                                {oldCategoryes.map( (category, index)=>(
+                                    <option
+                                        key={index}
+                                        value={category.id}
+                                    >
+                                        {category.name}
+                                    </option>
+                                ))}
                             </select>
                         </div>
                         <div className="buttons">

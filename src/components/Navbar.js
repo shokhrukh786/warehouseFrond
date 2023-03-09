@@ -27,7 +27,6 @@ function Navbar(props) {
                         </Link>
                     </li>*/}
                     <div className="logo"><span></span></div>
-                    <li>
                         {SidebarData.map((sidebaritem) => {
                             return(
                                 <li key={sidebaritem.id}
@@ -40,7 +39,6 @@ function Navbar(props) {
                                 </li>
                             );
                         })}
-                    </li>
                 </ul>
             </div>
         </>
