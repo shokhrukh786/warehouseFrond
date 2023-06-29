@@ -1,16 +1,26 @@
 .navbar {
-    background-color: #060b26;
+    background-color: #3f6f9e;
     height: 8vh;
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    margin-bottom: 12px;
 }
+
 .nav-menu-icon{
-    margin-left: 2rem;
-    font-size: 2rem;
+    margin-left: 15rem;
+    font-size: 1rem;
     color: white;
     max-height: 2rem;
     background: none;
+}
+.nav-menu-user-icon{
+    margin-right: 2rem;
+    font-size: 1rem;
+    color: white;
+    max-height: 2rem;
+    background: none;
+    text-decoration: none;
 }
 .sidebar-container{
     background-color: #060b26;
@@ -26,6 +36,7 @@
 .sidebar-container.active{
     left: 0;
     transition: 500ms;
+    height: 100%;
 }
 .sidebar-item{
     display: flex;
@@ -47,7 +58,7 @@
     border-radius: 4px;
 }
 .sidebar-item a:hover{
-    background-color: rgb(69,69,197);
+    background-color: #305880;
     color: white;
 }
 .sidebar-items{
@@ -63,17 +74,20 @@
 span{
     padding-left: 1rem;
 }
-/*
+
 .logo{
-    width: 70% ;
-    height: 30px;
+    width: 100% ;
+    height: 46px;
     text-align: center;
     color: whitesmoke;
     margin-bottom: 1rem;
-    border: 1px solid ;
-    border-radius: 3px;
-    background-color: rgb(69,69,197);
-}*/
+    background-color: #305880;
+
+}
 li{
     decaretoin:none;
 }
+.sidebar-items{
+    padding-left: 0rem;
+}
+

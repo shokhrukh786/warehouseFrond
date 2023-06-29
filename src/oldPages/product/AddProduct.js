@@ -26,8 +26,8 @@ function AddProduct(props) {
     }
 
     const onSubmit =async (e)=>{
-        e.preventDefault() ;   /*urldagi malumotlarni yashiradi*/
-        // console.log(e.target.category.value);
+        e.preventDefault() ;
+
         await axios.post("http://localhost:8080/api/product", {
             name: name,
             code: code,
@@ -36,10 +36,6 @@ function AddProduct(props) {
         })
         navigate("/product")     /*saqlangandan keyin boshqa pagega otadi*/
     }
-
-
-
-
 
     /**
      * select form category uchun

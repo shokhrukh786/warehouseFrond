@@ -1,0 +1,26 @@
+.custom-card{
+    width: 450px;
+    max-width: 100%;
+    background-color: #eee!important;
+}
+.logo-icon {
+    font-size: 100px;
+    color: lightskyblue;
+    border-radius: 50%;
+}
+.logo-text{
+    font-family: Roboto, "Roboto Light", serif;
+    text-align: center;
+}
+.header-actions{
+    display: flex;
+    justify-content: space-between;
+}
+.header-actions button{
+    margin-right: 20px;
+    margin-top: 10px;
+}
+.login-page{
+    /*background-image: url("../src/assets/image/shapelined-_JBKdviweXI-unsplash.jpg");*/
+}
+

@@ -10,7 +10,7 @@ export const SidebarData =[
         title: "Omborxona",
         cName: "sidebar-item",
         icon: <TbIcons.TbBuildingWarehouse/>,
-        path: "/"
+        path: "/warehouse"
     },
     {
         id:2,
@@ -38,14 +38,14 @@ export const SidebarData =[
         title: "Mijoz",
         cName: "sidebar-item",
         icon: <BsIcons.BsFillPersonFill/>,
-        path: "/product"
+        path: "/client"
     },
     {
         id:6,
         title: "Kirim",
         cName: "sidebar-item",
         icon: <RiIcons.RiLoginBoxLine/>,
-        path: "/product"
+        path: "/input"
     },
     {
         id:7,

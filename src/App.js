@@ -1,49 +1,57 @@
 import './App.css';
-import Navbar from "./components/Navbar";
+import Navbar from "./components/navbar";
 import {Route, Routes} from "react-router-dom";
-import Omborxona from "./pages/Home";
-import AddWarehouse from "./pages/warehouse/AddWarehouse";
-import ViewWarehouse from "./pages/warehouse/ViewWarehouse";
-import EditWarehouse from "./pages/warehouse/EditWarehouse";
-import Category from "./pages/Category";
-import AddCategory from "./pages/category/AddCategory";
-import EditCategory from "./pages/category/EditCategory";
-import ViewCategory from "./pages/category/ViewCategory";
-import Product from "./pages/Product";
-import AddProduct from "./pages/product/AddProduct";
-import EditProduct from "./pages/product/EditProduct";
-import ViewProduct from "./pages/product/ViewProduct";
-import Supplier from "./pages/Supplier";
-import AddSupplier from "./pages/supplier/AddSupplier";
-import ViewSupplierr from "./pages/supplier/ViewSupplierr";
-import EditSupplier from "./pages/supplier/EditSupplier";
+import {Fragment} from "react";
+
+import LoginPage from "./pages/login/login.page";
+import WarehousePage from "./pages/warehouse/warehouse.page";
+import {AuthGuard} from "./guards/auth.guard";
+import UnauthorizedPage from "./pages/unauthorized/unauthorized.page";
+import NotFound from "./pages/not-found/not-found";
+import {Role} from "./model/role";
+import ProductPage from "./pages/product/product.page";
+import CategoryPage from "./pages/category/category.page";
+import SupplierPage from "./pages/supplier/supplier.page";
+
 
 function App() {
     return (
-        <>
+        <Fragment>
             <Navbar/>
             <Routes>
-                <Route exact path="/" element={<Omborxona/>}/>
-                <Route exact path="/addwarehouse" element={<AddWarehouse/>}/>
-                <Route exact path="/viewwarehouse/:id" element={<ViewWarehouse/>}/>
-                <Route exact path="/editwarehouse/:id" element={<EditWarehouse/>}/>
+                <Route exact path="/" element={<LoginPage/>}/>
 
-                <Route exact path="/category" element={<Category/>}/>
-                <Route exact path="/addcategory" element={<AddCategory/>}/>
-                <Route exact path="/editcategory/:id" element={<EditCategory/>}/>
-                <Route exact path="/viewcategory/:id" element={<ViewCategory/>}/>
+                <Route exact path="/admin" element={
+                    <AuthGuard roles={[Role.ADMIN, Role.USER]}>
+                        <Navbar/>
+                    </AuthGuard>}
+                />
 
-                <Route exact path="/product" element={<Product/>}/>
-                <Route exact path="/addproduct" element={<AddProduct/>}/>
-                <Route exact path="/editproduct/:id" element={<EditProduct/>}/>
-                <Route exact path="/viewproduct/:id" element={<ViewProduct/>}/>
+                <Route path="/warehouse" element={
+                    <AuthGuard roles={[Role.ADMIN, Role.USER]}>
+                        <WarehousePage/>
+                    </AuthGuard>}
+                />
 
-                <Route exact path="/supplier" element={<Supplier/>}/>
-                <Route exact path="/addsupplier" element={<AddSupplier/>}/>
-                <Route exact path="/editsupplier/:id" element={<EditSupplier/>}/>
-                <Route exact path="/viewsupplier/:id" element={<ViewSupplierr/>}/>
+                <Route path="/category" element={
+                    <AuthGuard roles={[Role.ADMIN, Role.USER]}>
+                        <CategoryPage/>
+                    </AuthGuard>}
+                />
+
+                <Route path="/product" element={
+                    <AuthGuard roles={[Role.ADMIN, Role.USER]}>
+                        <ProductPage/>
+                    </AuthGuard>}
+                />
+
+                <Route path='/supplier' element={<SupplierPage/>}/>
+
+
+                <Route path="/401" element={<UnauthorizedPage/>}/>
+                <Route path="/404" element={<NotFound/>}/>
             </Routes>
-        </>
+        </Fragment>
     );
 }
 

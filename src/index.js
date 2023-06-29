@@ -4,14 +4,33 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {BrowserRouter} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import axios from "axios";
+import {Provider} from "react-redux";
+import store from '../src/store/index'
+
+//
+// axios.interceptors.request.use(
+//     (config) => {
+//         const token = window.localStorage.getItem('bookstore-token');
+//         if (token != null){
+//             config.headers.Authorization = token;
+//         }
+//         return config
+//     },
+//     (error) => {
+//         return Promise.reject(error);
+//     }
+// )
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-      <BrowserRouter>
-          <App />
-      </BrowserRouter>
+      <Provider store={store}>
+          <BrowserRouter>
+              <App/>
+          </BrowserRouter>
+      </Provider>
   </React.StrictMode>
 );
 

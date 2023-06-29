@@ -36,7 +36,7 @@ function ViewWarehouse(props) {
                         </div>
                     </div>
                     <div className="btn-right">
-                        <Link to={"/"} className="btn btn-primary my-2 ">Ortga qaytish</Link>
+                        <Link to={"/warehouse"} className="btn btn-primary my-2 ">Ortga qaytish</Link>
                     </div>
                 </div>
             </div>
